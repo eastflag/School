@@ -57,4 +57,23 @@
         <item name="android:background">@drawable/btn_back_red</item>
     </style>
 
+    <style name="HeathItemTitleTxt">
+        <item name="android:textSize">10sp</item>
+        <item name="android:textColor">#ffffff</item>
+    </style>
+    <style name="HeathItemContentMain_A">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">#ffffff</item>
+    </style>
+    <style name="HeathItemContentMain_B">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">#ffffff</item>
+    </style>
+    <style name="HeathItemContentSub">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">9sp</item>
+        <item name="android:textColor">#ffffff</item>
+    </style>
 </resources>
