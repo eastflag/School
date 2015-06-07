@@ -38,9 +38,9 @@ private Context mContext;
 
 		WindowManager.LayoutParams lpWindow = new WindowManager.LayoutParams();
 		lpWindow.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
-		lpWindow.dimAmount = 0.7f;
+		lpWindow.dimAmount = 0.6f;
 		getWindow().setAttributes(lpWindow);
-		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 		
 		setContentView(R.layout.dialog_register);
 
