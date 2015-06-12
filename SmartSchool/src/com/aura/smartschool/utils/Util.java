@@ -2,7 +2,10 @@ package com.aura.smartschool.utils;
 
 import android.content.Context;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.telephony.TelephonyManager;
+import android.util.Base64;
 import android.widget.Toast;
 
 public final class Util {
@@ -29,5 +32,16 @@ public final class Util {
 		m_toast.setDuration(Toast.LENGTH_SHORT);
 
 		m_toast.show();
+	}
+	
+	public static Bitmap StringToBitMap(String encodedString) {
+		try {
+			byte[] decodeByte = Base64.decode(encodedString, Base64.DEFAULT);
+			Bitmap bitmap = BitmapFactory.decodeByteArray(decodeByte, 0, decodeByte.length);
+			return bitmap;
+		} catch (Exception e) {
+			e.getMessage();
+			return null;
+		}
 	}
 }

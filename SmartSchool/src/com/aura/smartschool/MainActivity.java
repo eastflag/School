@@ -6,10 +6,10 @@ import org.json.JSONObject;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.DialogFragment;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -25,8 +25,7 @@ import com.androidquery.callback.AjaxStatus;
 import com.aura.smartschool.Interface.LoginListener;
 import com.aura.smartschool.dialog.LoadingDialog;
 import com.aura.smartschool.dialog.LoginDialog;
-import com.aura.smartschool.dialog.LoginDialogFragment;
-import com.aura.smartschool.dialog.RegisterDialog;
+import com.aura.smartschool.dialog.RegisterDialogActivity;
 import com.aura.smartschool.utils.PreferenceUtil;
 import com.aura.smartschool.utils.Util;
 import com.aura.smartschool.vo.MemberVO;
@@ -37,7 +36,7 @@ public class MainActivity extends Activity {
 	private ImageView ivHome;
 	
 	private LoginDialog mLoginDialog;
-	private RegisterDialog mRegisterDialog;
+	//private RegisterDialog mRegisterDialog;
 	
 	private AQuery mAq;
 	
@@ -97,9 +96,6 @@ public class MainActivity extends Activity {
 						dialog.dismiss();
 						if(mLoginDialog != null) {
 							mLoginDialog.dismiss();
-						}
-						if(mRegisterDialog != null) {
-							mRegisterDialog.dismiss();
 						}
 						finish();
 					}
@@ -176,45 +172,7 @@ public class MainActivity extends Activity {
 		}
 	}
 	
-	private void getRegister(MemberVO member) {
-		LoadingDialog.showLoading(this);
-		try {
-			String url = Constant.HOST + Constant.API_SIGNUP;
-
-			JSONObject json = new JSONObject();
-			json.put("home_id", member.home_id);
-			json.put("mdn", member.mdn);
-			json.put("is_parent", member.is_parent);
-			json.put("name", member.name);
-			json.put("photo", member.photo);
-			json.put("school_name", member.school_name);
-			json.put("school_grade", member.school_grade);
-			json.put("school_ban", member.school_ban);
-			
-			Log.d("LDK", "url:" + url);
-			Log.d("LDK", "input parameter:" + json.toString(1));
 	
-			mAq.post(url, json, JSONObject.class, new AjaxCallback<JSONObject>(){
-				@Override
-				public void callback(String url, JSONObject object, AjaxStatus status) {
-					LoadingDialog.hideLoading();
-					try {
-						Log.d("LDK", "result:" + object.toString(1));
-						
-						if("0".equals(object.getString("RESULT"))) {
-							//
-						} else {
-
-						}
-					} catch (JSONException e) {
-						e.printStackTrace();
-					}
-				}
-			});
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-	}
 
 	//more menu
 	PopupMenu.OnMenuItemClickListener mMoreMenuItemClickListener = new PopupMenu.OnMenuItemClickListener() {
@@ -238,14 +196,16 @@ public class MainActivity extends Activity {
 
 		@Override
 		public void gotoRegister() {
-			mLoginDialog.dismiss();
-			mRegisterDialog = new RegisterDialog(MainActivity.this, mLoginListener);
-			mRegisterDialog.show();
+			//mLoginDialog.dismiss();
+			//mRegisterDialog = new RegisterDialog(MainActivity.this, mLoginListener);
+			//mRegisterDialog.show();
+			Intent intent = new Intent(MainActivity.this, RegisterDialogActivity.class);
+			startActivity(intent);
 		}
 
 		@Override
 		public void onRegister(MemberVO member) {
-			getRegister(member);
+			//getRegister(member);
 		}
 	};
 }

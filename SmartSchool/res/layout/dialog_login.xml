@@ -6,47 +6,62 @@
     android:orientation="vertical" >
 
     <LinearLayout
-        android:layout_width="272dp"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_marginStart="20dp" android:layout_marginEnd="20dp"
         android:background="@drawable/bg_white"
         android:orientation="vertical"
-        android:padding="20dp" 
-        android:focusable="true"
-		android:focusableInTouchMode="true">
-
-        <EditText
-            android:id="@+id/et_id"
-            style="@style/InputBox" android:layout_height="40dp"
-            android:layout_marginBottom="15dp"
-            android:hint="Home ID" />
-            
-       <Button
-            android:id="@+id/btn_login"
-            style="@style/Button_woodred"
-            android:layout_width="match_parent"
-            android:text="로그인" />
-
+        android:focusable="true" android:focusableInTouchMode="true">
+		
+        <TextView
+	        android:id="@+id/tvTitle"
+	        style="@style/Dialog_Title"
+	        android:background="@drawable/shape_popup_title_c8"
+	        android:text="로그인" />
+        
         <LinearLayout
-            style="@style/Line"
-            android:layout_marginBottom="15dp"
-            android:layout_marginTop="15dp" />
-
+	        style="@style/Line"
+	        android:background="#FF930D03" />
+        
         <LinearLayout
-            android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal" >
+	        android:layout_width="match_parent" android:layout_height="wrap_content"
+	        android:orientation="vertical"
+	        android:padding="20dp" 
+	        android:focusable="true">
 
-            <TextView
-                android:id="@+id/tv_register" style="@style/Button_woodred"
-                android:layout_height="35dp"
-                android:layout_marginRight="5dp"
-                android:text="회원가입" />
-            
-            <TextView
-                android:id="@+id/tv_guest" style="@style/Button_woodred"
-                android:layout_height="35dp"
-                android:layout_marginLeft="5dp"
-                android:text="둘러보기" />
+	        <EditText
+	            android:id="@+id/et_id"
+	            style="@style/InputBox" android:layout_height="40dp"
+	            android:layout_marginBottom="15dp"
+	            android:hint="Home ID" />
+	            
+	        <Button
+	            android:id="@+id/btn_login"
+	            style="@style/Button_woodred"
+	            android:layout_width="match_parent"
+	            android:text="로그인" />
+	
+	        <LinearLayout
+	            style="@style/Line"
+	            android:layout_marginBottom="15dp"
+	            android:layout_marginTop="15dp" />
+	
+	        <LinearLayout
+	            android:layout_width="match_parent" android:layout_height="wrap_content"
+	            android:gravity="center_vertical"
+	            android:orientation="horizontal" >
+	
+	            <TextView
+	                android:id="@+id/tv_register" style="@style/Button_woodred"
+	                android:layout_height="35dp"
+	                android:layout_marginRight="5dp"
+	                android:text="회원가입" />
+	            
+	            <TextView
+	                android:id="@+id/tv_guest" style="@style/Button_woodred"
+	                android:layout_height="35dp"
+	                android:layout_marginLeft="5dp"
+	                android:text="둘러보기" />
+	        </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 

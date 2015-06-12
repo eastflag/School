@@ -4,39 +4,124 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical" >
-
+    
     <LinearLayout
-        android:layout_width="272dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/box_popup_wh"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_marginStart="20dp" android:layout_marginEnd="20dp"
+        android:background="@drawable/bg_white"
         android:orientation="vertical"
-        android:padding="21dp" >
-
-        <EditText
-            android:id="@+id/et_id"
-            style="@style/InputBox"
-            android:hint="Home ID" />
+        android:focusable="true" android:focusableInTouchMode="true">
+		
+        <TextView
+	        android:id="@+id/tvTitle"
+	        style="@style/Dialog_Title"
+	        android:background="@drawable/shape_popup_title_c8"
+	        android:text="회원가입" />
         
-        <EditText
-            android:id="@+id/et_name"
-            style="@style/InputBox"
-            android:hint="이름" />
-        
-        <EditText
-            android:id="@+id/et_mdn"
-            style="@style/InputBox"
-            android:enabled="false" />
-
         <LinearLayout
-            style="@style/Line"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp" />
-            
-       <Button
-            android:id="@+id/btn_register"
-            style="@style/Button_woodred"
-            android:text="회원가입" />
+	        style="@style/Line"
+	        android:background="#FF930D03"  />
+        
+        <LinearLayout
+	        android:layout_width="match_parent" android:layout_height="wrap_content"
+	        android:orientation="horizontal">
+            <TextView 
+                android:id="@+id/tvParent"
+                android:layout_width="0dp" android:layout_weight="1" android:layout_height="40dp"
+                android:background="#FF930D03" android:textColor="#FFF0F0F0"
+                android:text="부 모" android:gravity="center" />
+            <TextView 
+                android:id="@+id/tvStudent"
+                android:layout_width="0dp" android:layout_weight="1" android:layout_height="40dp"
+                android:background="#FFF0F0F0" android:textColor="#FF930D03"
+                android:text="학 생" android:gravity="center"  />
+        </LinearLayout>
 
+	    <LinearLayout
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:orientation="vertical"
+	        android:padding="20dp" >
+	
+	        <EditText
+	            android:id="@+id/et_id"
+	            style="@style/InputBox"
+	            android:layout_marginBottom="10dp" 
+	            android:hint="Home ID" />
+	        
+	        <LinearLayout
+		        android:layout_width="match_parent" android:layout_height="85dp"
+		        android:layout_marginBottom="10dp"
+		        android:orientation="horizontal">
+		        <FrameLayout 
+		            android:id="@+id/fl_user_image"
+		            android:layout_width="85dp" android:layout_height="85dp">
+		            <ImageView android:id="@+id/iv_user_image"
+			            android:layout_width="match_parent"
+			            android:layout_height="match_parent"
+			            android:background="@drawable/ico_photo" />
+		            <ImageView
+			            android:layout_width="match_parent"
+			            android:layout_height="match_parent"
+			            android:background="@drawable/ico_photo_bg" />
+		        </FrameLayout>
+	            <LinearLayout
+			        android:layout_width="match_parent" android:layout_height="match_parent"
+			        android:layout_marginStart="10dp"
+			        android:orientation="vertical">
+			        <EditText
+			            android:id="@+id/et_name"
+			            style="@style/InputBox"
+			            android:layout_marginBottom="15dp" 
+			            android:hint="이름" />
+			        <EditText
+			            android:id="@+id/et_relation"
+			            style="@style/InputBox"
+			            android:layout_marginBottom="15dp"
+			            android:hint="관계, 예)엄마, 아들"   />
+	            </LinearLayout>
+	        </LinearLayout>
+
+	        
+	        <LinearLayout
+	            android:id="@+id/school_info"
+		        android:layout_width="match_parent" android:layout_height="wrap_content"
+		        android:orientation="vertical" android:visibility="gone">
+	            <EditText
+		            android:id="@+id/et_school_name"
+		            style="@style/InputBox"
+		            android:layout_marginBottom="10dp" 
+		            android:hint="학교명" />
+	            <LinearLayout
+			        android:layout_width="match_parent" android:layout_height="wrap_content"
+			        android:orientation="horizontal">
+		            <EditText
+			            android:id="@+id/et_school_grade"
+			            style="@style/InputBox"
+			            android:layout_width="0dp" android:layout_weight="1"
+			            android:layout_marginEnd="10dp" 
+			            android:hint="학년" android:inputType="number" />
+		            <EditText
+			            android:id="@+id/et_school_class"
+			            style="@style/InputBox"
+			            android:layout_width="0dp" android:layout_weight="1"
+			            android:layout_marginStart="10dp" 
+			            android:hint="반"  android:inputType="number" />
+	            </LinearLayout>
+	        </LinearLayout>
+	
+	        <LinearLayout
+	            style="@style/Line"
+	            android:layout_marginBottom="10dp"
+	            android:layout_marginTop="10dp" />
+	            
+	       <Button
+	            android:id="@+id/btn_register"
+	            style="@style/Button_woodred"
+	            android:layout_width="match_parent"
+	            android:text="회원가입" />
+	
+	    </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>
