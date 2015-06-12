@@ -143,10 +143,17 @@ public class RegisterDialogActivity extends Activity {
 					try {
 						Log.d("LDK", "result:" + object.toString(1));
 						
-						if(status.getCode() == 200 && "0".equals(object.getString("result"))) {
+						if(status.getCode() != 200) {
+							
+							return;
+						}
+						
+						if("0".equals(object.getString("result"))) {
 							//home id 저장
 							PreferenceUtil.getInstance(mContext).putHomeId(et_id.getText().toString());
 							//
+							setResult(RESULT_OK);
+							finish();
 						} else {
 
 						}

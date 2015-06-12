@@ -1,5 +1,8 @@
 package com.aura.smartschool;
 
+import java.util.ArrayList;
+
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -10,12 +13,16 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Environment;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
@@ -23,6 +30,7 @@ import com.androidquery.AQuery;
 import com.androidquery.callback.AjaxCallback;
 import com.androidquery.callback.AjaxStatus;
 import com.aura.smartschool.Interface.LoginListener;
+import com.aura.smartschool.adapter.MemberListAdapter;
 import com.aura.smartschool.dialog.LoadingDialog;
 import com.aura.smartschool.dialog.LoginDialog;
 import com.aura.smartschool.dialog.RegisterDialogActivity;
@@ -31,7 +39,8 @@ import com.aura.smartschool.utils.Util;
 import com.aura.smartschool.vo.MemberVO;
 
 public class MainActivity extends Activity {
-
+	private static final int REQ_DIALOG_SIGNUP = 0;
+	
 	private TextView tvTitle;
 	private ImageView ivHome;
 	
@@ -42,6 +51,10 @@ public class MainActivity extends Activity {
 	
 	private FragmentManager mFm;
 	private Fragment mFragment;
+	
+	private ArrayList<MemberVO> mMemberList = new ArrayList<MemberVO>();
+	private ListView mListView;
+	private MemberListAdapter mAdapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -114,6 +127,17 @@ public class MainActivity extends Activity {
 		}
 	}
 	
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+        case REQ_DIALOG_SIGNUP:
+            if (resultCode == RESULT_OK) {
+            	getMemberList();
+            }
+            break;
+        }
+    }
+	
 	private void checkLogin() {
 		String id = PreferenceUtil.getInstance(this).getHomeId();
 		String mdn = Util.getMdn(this);
@@ -157,10 +181,17 @@ public class MainActivity extends Activity {
 					try {
 						Log.d("LDK", "result:" + object.toString(1));
 						
-						if("0".equals(object.getString("RESULT"))) {
-							//
+						if(status.getCode() != 200) {
+							
+							return;
+						}
+						
+						if("0".equals(object.getString("result"))) {
+							mLoginDialog.dismiss();
+							JSONArray array = object.getJSONArray("data");
+							displayMemberList(array);
 						} else {
-
+							
 						}
 					} catch (JSONException e) {
 						e.printStackTrace();
@@ -172,7 +203,64 @@ public class MainActivity extends Activity {
 		}
 	}
 	
+	private void getMemberList() {
+		LoadingDialog.showLoading(this);
+		try {
+			String url = Constant.HOST + Constant.API_GET_MEMBERLIST;
+
+			JSONObject json = new JSONObject();
+			json.put("home_id", PreferenceUtil.getInstance(MainActivity.this).getHomeId());
+			
+			Log.d("LDK", "url:" + url);
+			Log.d("LDK", "input parameter:" + json.toString(1));
 	
+			mAq.post(url, json, JSONObject.class, new AjaxCallback<JSONObject>(){
+				@Override
+				public void callback(String url, JSONObject object, AjaxStatus status) {
+					LoadingDialog.hideLoading();
+					try {
+						Log.d("LDK", "result:" + object.toString(1));
+						
+						if(status.getCode() != 200) {
+							
+							return;
+						}
+						
+						if("0".equals(object.getString("result"))) {
+							JSONArray array = object.getJSONArray("data");
+							displayMemberList(array);
+						} else {
+							
+						}
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+				}
+			});
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void displayMemberList(JSONArray array) throws JSONException {
+		for(int i=0; i < array.length(); ++i) {
+			JSONObject json = array.getJSONObject(i);
+			MemberVO member = new MemberVO();
+			member.home_id = json.getString("home_id");
+			member.member_id = json.getInt("member_id");
+			member.mdn = json.getString("mdn");
+			member.is_parent = json.getInt("is_parent");
+			member.name = json.getString("name");
+			member.relation = json.getString("relation");
+			member.photo = json.getString("photo");
+			member.school_name = json.getString("school_name");
+			member.school_grade = json.getString("school_grade");
+			member.school_ban = json.getString("school_ban");
+			mMemberList.add(member);
+		}
+		
+		
+	}
 
 	//more menu
 	PopupMenu.OnMenuItemClickListener mMoreMenuItemClickListener = new PopupMenu.OnMenuItemClickListener() {
@@ -200,7 +288,7 @@ public class MainActivity extends Activity {
 			//mRegisterDialog = new RegisterDialog(MainActivity.this, mLoginListener);
 			//mRegisterDialog.show();
 			Intent intent = new Intent(MainActivity.this, RegisterDialogActivity.class);
-			startActivity(intent);
+			startActivityForResult(intent, REQ_DIALOG_SIGNUP);
 		}
 
 		@Override
