@@ -39,6 +39,15 @@ public class PreferenceUtil extends BasePreferenceUtil {
 		return get("home_id");
 	}
 	
+	//자기 이름 저장
+	public void putName(String name) {
+		put("name", name);
+	}
+	
+	public String getName() {
+		return get("name");
+	}
+	
 	//부모인지 아닌지 저장
 	public void putParent(boolean isParent) {
 		put("isParent", isParent);

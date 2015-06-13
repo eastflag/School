@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="50dp">
+    android:layout_height="45dp">
 
     <ImageButton
         android:id="@+id/logo"
@@ -9,14 +9,7 @@
         android:layout_centerVertical="true" android:layout_alignParentLeft="true"
         android:layout_marginLeft="5dp"
         android:background="@null"
-        android:src="@drawable/btn_pre" />
-    
-    <TextView
-        android:id="@+id/tvTitle"
-        android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:textSize="26sp" android:textColor="#FF930D03" android:textStyle="bold"
-        android:text="SmartSchool" />
+        android:src="@drawable/home" />
     
 	<RelativeLayout 
 	    android:id="@+id/fl_more"
@@ -33,5 +26,16 @@
 	    android:layout_width="match_parent" android:layout_height="1dp" 
 	    android:layout_alignParentBottom="true" android:layout_centerHorizontal="true"
 	    android:background="#FF930D03"/>
+
+	<TextView
+	    android:id="@+id/tvTitle"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_centerVertical="true"
+	    android:layout_toRightOf="@+id/logo"
+	    android:text="SmartSchool"
+	    android:textColor="#FF930D03"
+	    android:textSize="22sp"
+	    android:textStyle="bold" />
 
 </RelativeLayout>

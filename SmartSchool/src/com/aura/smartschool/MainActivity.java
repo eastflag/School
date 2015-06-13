@@ -22,6 +22,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
@@ -43,9 +44,9 @@ public class MainActivity extends Activity {
 	
 	private TextView tvTitle;
 	private ImageView ivHome;
+	private LinearLayout mainMenu;
 	
 	private LoginDialog mLoginDialog;
-	//private RegisterDialog mRegisterDialog;
 	
 	private AQuery mAq;
 	
@@ -65,6 +66,7 @@ public class MainActivity extends Activity {
 		mListView = (ListView) findViewById(R.id.listview);
 		mAdapter = new MemberListAdapter(this, mMemberList);
 		mListView.setAdapter(mAdapter);
+		mainMenu = (LinearLayout) findViewById(R.id.main);
 		
 		//액션바 처리
 		ActionBar mActionBar = getActionBar();
@@ -73,11 +75,12 @@ public class MainActivity extends Activity {
 		View mCustomView = View.inflate(this, R.layout.actionbar, null);
 		tvTitle = (TextView) mCustomView.findViewById(R.id.tvTitle);
 		ivHome = (ImageView) mCustomView.findViewById(R.id.logo);
-		ivHome.setVisibility(View.GONE);
 		ivHome.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				onBackPressed();
+				if(mFragment != null) {
+					showMainMenu();
+				}
 			}
 		});
 		final View actionbar_fl_more = mCustomView.findViewById(R.id.fl_more);
@@ -126,9 +129,7 @@ public class MainActivity extends Activity {
 				})
 				.show();
 		} else {
-			mFm.beginTransaction().remove(mFragment).commit();
-			mFragment = null;
-			//hideSubmenu();
+			showMainMenu();
 		}
 	}
 	
@@ -141,6 +142,21 @@ public class MainActivity extends Activity {
             }
             break;
         }
+    }
+    
+    private void showSubMenu() {
+    	ivHome.setImageResource(R.drawable.btn_pre);
+    	tvTitle.setText(PreferenceUtil.getInstance(this).getName());
+    	mainMenu.setVisibility(View.GONE);
+    }
+    
+    private void showMainMenu() {
+    	ivHome.setImageResource(R.drawable.home);
+    	tvTitle.setText(PreferenceUtil.getInstance(this).getHomeId());
+    	mainMenu.setVisibility(View.VISIBLE);
+    	
+    	mFm.beginTransaction().remove(mFragment).commit();
+		mFragment = null;
     }
 	
 	private void checkLogin() {
@@ -268,10 +284,17 @@ public class MainActivity extends Activity {
 			member.school_grade = json.getString("school_grade");
 			member.school_ban = json.getString("school_ban");
 			mMemberList.add(member);
+			//자기 정보 저장
+			if(Util.getMdn(this).equals(member.mdn)) {
+				PreferenceUtil.getInstance(this).putHomeId(member.home_id);
+				PreferenceUtil.getInstance(this).putParent(member.is_parent==1 ? true:false );
+				PreferenceUtil.getInstance(this).putName(member.name);
+			}
 		}
 		
 		mAdapter.setData(mMemberList);
 		mAdapter.notifyDataSetChanged();
+		showMainMenu();
 	}
 
 	//more menu
