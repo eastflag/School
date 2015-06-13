@@ -31,10 +31,12 @@ import com.androidquery.AQuery;
 import com.androidquery.callback.AjaxCallback;
 import com.androidquery.callback.AjaxStatus;
 import com.aura.smartschool.Interface.LoginListener;
+import com.aura.smartschool.Interface.MemberListListener;
 import com.aura.smartschool.adapter.MemberListAdapter;
 import com.aura.smartschool.dialog.LoadingDialog;
 import com.aura.smartschool.dialog.LoginDialog;
 import com.aura.smartschool.dialog.RegisterDialogActivity;
+import com.aura.smartschool.fragment.MainFragment;
 import com.aura.smartschool.utils.PreferenceUtil;
 import com.aura.smartschool.utils.Util;
 import com.aura.smartschool.vo.MemberVO;
@@ -63,8 +65,9 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 		
 		mAq = new AQuery(this);
+		mFm = getFragmentManager();
 		mListView = (ListView) findViewById(R.id.listview);
-		mAdapter = new MemberListAdapter(this, mMemberList);
+		mAdapter = new MemberListAdapter(this, mMemberList, mMemberListListener);
 		mListView.setAdapter(mAdapter);
 		mainMenu = (LinearLayout) findViewById(R.id.main);
 		
@@ -150,13 +153,20 @@ public class MainActivity extends Activity {
     	mainMenu.setVisibility(View.GONE);
     }
     
+    private void showSubMenu(String name) {
+    	tvTitle.setText(name);
+    	showSubMenu();
+    }
+    
     private void showMainMenu() {
     	ivHome.setImageResource(R.drawable.home);
     	tvTitle.setText(PreferenceUtil.getInstance(this).getHomeId());
     	mainMenu.setVisibility(View.VISIBLE);
     	
-    	mFm.beginTransaction().remove(mFragment).commit();
-		mFragment = null;
+    	if(mFragment != null) {
+	    	mFm.beginTransaction().remove(mFragment).commit();
+			mFragment = null;
+    	}
     }
 	
 	private void checkLogin() {
@@ -329,6 +339,15 @@ public class MainActivity extends Activity {
 		@Override
 		public void onRegister(MemberVO member) {
 			//getRegister(member);
+		}
+	};
+	
+	MemberListListener mMemberListListener = new MemberListListener() {
+		@Override
+		public void onSelected(int position) {
+			mFragment = new MainFragment(mMemberList.get(position));
+			mFm.beginTransaction().replace(R.id.container, mFragment).commit();
+			showSubMenu(mMemberList.get(position).name);
 		}
 	};
 }

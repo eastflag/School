@@ -3,6 +3,7 @@ package com.aura.smartschool.adapter;
 import java.util.ArrayList;
 
 import com.aura.smartschool.R;
+import com.aura.smartschool.Interface.MemberListListener;
 import com.aura.smartschool.vo.MemberVO;
 
 import android.content.Context;
@@ -20,10 +21,12 @@ import android.widget.TextView;
 public class MemberListAdapter extends BaseAdapter {
 	private Context mContext;
 	private ArrayList<MemberVO> mMemberList;
+	private MemberListListener mMemberListListener;
 	
-	public MemberListAdapter(Context context, ArrayList<MemberVO> memberList) {
+	public MemberListAdapter(Context context, ArrayList<MemberVO> memberList, MemberListListener memberListListener) {
 		mContext = context;
 		mMemberList = memberList;
+		mMemberListListener = memberListListener;
 	}
 	
 	public void setData(ArrayList<MemberVO> memberList) {
@@ -46,7 +49,7 @@ public class MemberListAdapter extends BaseAdapter {
 	}
 
 	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
+	public View getView(final int position, View convertView, ViewGroup parent) {
 		ViewHolder holder;
 		if(convertView == null){
 			holder = new ViewHolder();
@@ -83,7 +86,7 @@ public class MemberListAdapter extends BaseAdapter {
 		holder.btnView.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				
+				mMemberListListener.onSelected(position);
 			}
 		});
 		
