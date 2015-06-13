@@ -61,6 +61,11 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
+		mAq = new AQuery(this);
+		mListView = (ListView) findViewById(R.id.listview);
+		mAdapter = new MemberListAdapter(this, mMemberList);
+		mListView.setAdapter(mAdapter);
+		
 		//액션바 처리
 		ActionBar mActionBar = getActionBar();
 		mActionBar.setDisplayShowHomeEnabled(false);
@@ -162,6 +167,12 @@ public class MainActivity extends Activity {
 		}
 	}
 	
+	private void hideLoginDialog() {
+		if(mLoginDialog != null) {
+			mLoginDialog.dismiss();
+		}
+	}
+	
 	private void getLogin(MemberVO member) {
 		LoadingDialog.showLoading(this);
 		try {
@@ -179,15 +190,15 @@ public class MainActivity extends Activity {
 				public void callback(String url, JSONObject object, AjaxStatus status) {
 					LoadingDialog.hideLoading();
 					try {
-						Log.d("LDK", "result:" + object.toString(1));
-						
 						if(status.getCode() != 200) {
 							
 							return;
 						}
 						
+						Log.d("LDK", "result:" + object.toString(1));
+						
 						if("0".equals(object.getString("result"))) {
-							mLoginDialog.dismiss();
+							hideLoginDialog();
 							JSONArray array = object.getJSONArray("data");
 							displayMemberList(array);
 						} else {
@@ -259,7 +270,8 @@ public class MainActivity extends Activity {
 			mMemberList.add(member);
 		}
 		
-		
+		mAdapter.setData(mMemberList);
+		mAdapter.notifyDataSetChanged();
 	}
 
 	//more menu

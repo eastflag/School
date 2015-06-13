@@ -15,7 +15,8 @@
         android:id="@+id/tvTitle"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:textSize="26sp" android:textColor="#FF930D03" android:text="" android:textStyle="bold" />
+        android:textSize="26sp" android:textColor="#FF930D03" android:textStyle="bold"
+        android:text="SmartSchool" />
     
 	<RelativeLayout 
 	    android:id="@+id/fl_more"

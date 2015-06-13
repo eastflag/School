@@ -72,7 +72,7 @@ public class LoginDialog extends Dialog {
 				
 				String id = et_id.getText().toString();
 				if(TextUtils.isEmpty(id)){
-					Util.showToast(mContext, "입력되지 않은 항목이 있습니다.");
+					Util.showToast(mContext, "Home ID를 입력하세요.");
 					return;
 				}
 				
@@ -81,7 +81,7 @@ public class LoginDialog extends Dialog {
 				
 				MemberVO member = new MemberVO();
 				member.home_id = et_id.getText().toString();
-				member.mdn = et_id.getText().toString();
+				member.mdn = Util.getMdn(mContext);
 				
 				//로그인 처리
 				mListener.onLogin(member);

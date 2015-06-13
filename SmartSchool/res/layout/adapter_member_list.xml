@@ -1,8 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:padding="2dp"
     android:orientation="vertical" >
-    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="85dp"
+        android:orientation="horizontal" >
+        <FrameLayout
+            android:id="@+id/fl_user_image"
+            android:layout_width="85dp" android:layout_height="85dp"
+            android:padding="10dp" android:background="#FFFFFFFF" >
+            <ImageView
+                android:id="@+id/iv_user_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/ico_photo" />
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/ico_photo_bg" />
+        </FrameLayout>
+        <LinearLayout
+            android:layout_width="match_parent" android:layout_height="match_parent"
+            android:orientation="vertical" android:background="#FFFFFFFF" >
+            <RelativeLayout
+		        android:layout_width="match_parent" android:layout_height="42dp"
+		        android:orientation="horizontal" >
+		        <TextView 
+		            android:id="@+id/tvName"
+		            android:layout_width="wrap_content" android:layout_height="wrap_content"
+		            android:layout_centerVertical="true" android:layout_alignParentLeft="true" android:layout_marginLeft="5dp"
+		            android:text="홍길동" />
+		        <TextView 
+		            android:id="@+id/tvRelation"
+		            android:layout_width="wrap_content" android:layout_height="wrap_content"
+		            android:layout_centerVertical="true" android:layout_alignParentLeft="true" android:layout_marginLeft="65dp"
+		            android:text="아빠" />
+				<Button
+		            android:id="@+id/btnModify" style="@style/Button_woodred_fixed"
+		            android:layout_centerVertical="true" android:layout_alignParentRight="true" android:layout_marginRight="10dp"
+		            android:drawableLeft="@drawable/btn_change" android:paddingLeft="5dp"
+		            android:text="수 정" />
+		    </RelativeLayout>
+            <RelativeLayout
+		        android:layout_width="match_parent" android:layout_height="43dp"
+		        android:orientation="horizontal" >
+		        <TextView 
+		            android:id="@+id/tvMdn"
+		            android:layout_width="wrap_content" android:layout_height="wrap_content"
+		            android:layout_centerVertical="true" android:layout_alignParentLeft="true" android:layout_marginLeft="5dp"
+		            android:text="01012341234" />
+				<Button
+		            android:id="@+id/btnView" style="@style/Button_woodred_fixed"
+		            android:layout_centerVertical="true" android:layout_alignParentRight="true" android:layout_marginRight="10dp"
+		            android:drawableLeft="@drawable/btn_contact" android:paddingLeft="5dp"
+		            android:text="보 기" />
+		    </RelativeLayout>
+        </LinearLayout>
+    </LinearLayout>
 
 </LinearLayout>
