@@ -5,14 +5,22 @@
     
     <LinearLayout 
         android:id="@+id/main"
-        android:layout_width="fill_parent"
-    	android:layout_height="fill_parent">
+        android:layout_width="fill_parent" android:layout_height="fill_parent"
+    	android:orientation="vertical">
         <ListView
 	        android:id="@+id/listview"
 	        android:layout_width="match_parent" android:layout_height="wrap_content"
 	        android:dividerHeight="2dp"
 	        android:divider="#00000000">
 	    </ListView>
+	    <LinearLayout 
+	        android:layout_width="fill_parent" android:layout_height="0dp" android:layout_weight="1"
+	        android:layout_gravity="bottom|center_horizontal">
+	    	<TextView
+                android:id="@+id/tvAddMember" style="@style/Button_woodred"
+                android:layout_height="35dp"
+                android:text="가족 구성원 추가" />    
+	    </LinearLayout>
     </LinearLayout>
     
     <FrameLayout

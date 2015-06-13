@@ -1,5 +1,6 @@
 package com.aura.smartschool;
 
+import java.lang.reflect.Member;
 import java.util.ArrayList;
 
 import org.json.JSONArray;
@@ -35,6 +36,7 @@ import com.aura.smartschool.Interface.MemberListListener;
 import com.aura.smartschool.adapter.MemberListAdapter;
 import com.aura.smartschool.dialog.LoadingDialog;
 import com.aura.smartschool.dialog.LoginDialog;
+import com.aura.smartschool.dialog.MemberSaveDialogActivity;
 import com.aura.smartschool.dialog.RegisterDialogActivity;
 import com.aura.smartschool.fragment.MainFragment;
 import com.aura.smartschool.utils.PreferenceUtil;
@@ -42,11 +44,18 @@ import com.aura.smartschool.utils.Util;
 import com.aura.smartschool.vo.MemberVO;
 
 public class MainActivity extends Activity {
-	private static final int REQ_DIALOG_SIGNUP = 0;
+	public static final int REQ_DIALOG_SIGNUP = 100;
+	public static final int REQ_DIALOG_MEMBER_UPDATE = 101;
+	public static final int REQ_DIALOG_MEMBER_ADD = 102;
+	public static final int REQ_CODE_PICK_IMAGE = 200;
+	public static final String TEMP_PHOTO_FILE = "temp.jpg";       // 임시 저장파일
+	public static final int MOD_ADD = 0;
+	public static final int MOD_UPDATE = 1;
 	
 	private TextView tvTitle;
 	private ImageView ivHome;
 	private LinearLayout mainMenu;
+	private TextView tvAddMember;
 	
 	private LoginDialog mLoginDialog;
 	
@@ -70,6 +79,20 @@ public class MainActivity extends Activity {
 		mAdapter = new MemberListAdapter(this, mMemberList, mMemberListListener);
 		mListView.setAdapter(mAdapter);
 		mainMenu = (LinearLayout) findViewById(R.id.main);
+		tvAddMember = (TextView) findViewById(R.id.tvAddMember);
+		
+		tvAddMember.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				MemberVO member = new MemberVO();
+				member.home_id = PreferenceUtil.getInstance(MainActivity.this).getHomeId();
+				
+				Intent intent = new Intent(MainActivity.this, MemberSaveDialogActivity.class);
+				intent.putExtra("mode", MOD_ADD);
+				intent.putExtra("member", member);
+				startActivityForResult(intent, REQ_DIALOG_MEMBER_ADD);
+			}
+		});
 		
 		//액션바 처리
 		ActionBar mActionBar = getActionBar();
@@ -140,6 +163,8 @@ public class MainActivity extends Activity {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
         case REQ_DIALOG_SIGNUP:
+        case REQ_DIALOG_MEMBER_UPDATE:
+        case REQ_DIALOG_MEMBER_ADD:
             if (resultCode == RESULT_OK) {
             	getMemberList();
             }
@@ -280,6 +305,8 @@ public class MainActivity extends Activity {
 	}
 	
 	private void displayMemberList(JSONArray array) throws JSONException {
+		mMemberList.clear();
+		
 		for(int i=0; i < array.length(); ++i) {
 			JSONObject json = array.getJSONObject(i);
 			MemberVO member = new MemberVO();
@@ -348,6 +375,19 @@ public class MainActivity extends Activity {
 			mFragment = new MainFragment(mMemberList.get(position));
 			mFm.beginTransaction().replace(R.id.container, mFragment).commit();
 			showSubMenu(mMemberList.get(position).name);
+		}
+
+		@Override
+		public void onUpdateClicked(int position) {
+			Intent intent = new Intent(MainActivity.this, MemberSaveDialogActivity.class);
+			intent.putExtra("mode", MOD_UPDATE);
+			intent.putExtra("member", mMemberList.get(position));
+			startActivityForResult(intent, REQ_DIALOG_MEMBER_UPDATE);
+		}
+
+		@Override
+		public void onAddClicked(MemberVO member) {
+			
 		}
 	};
 }

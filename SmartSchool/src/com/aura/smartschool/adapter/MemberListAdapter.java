@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.aura.smartschool.R;
 import com.aura.smartschool.Interface.MemberListListener;
+import com.aura.smartschool.utils.Util;
 import com.aura.smartschool.vo.MemberVO;
 
 import android.content.Context;
@@ -71,7 +72,7 @@ public class MemberListAdapter extends BaseAdapter {
 		
 		String userImage = mMemberList.get(position).photo;
 		if(!TextUtils.isEmpty(userImage)){
-			holder.iv_user_image.setImageBitmap(decodeEncodeString(userImage));
+			holder.iv_user_image.setImageBitmap(Util.StringToBitmap(userImage));
 		}else{
 			holder.iv_user_image.setImageBitmap(null);
 		}
@@ -79,7 +80,7 @@ public class MemberListAdapter extends BaseAdapter {
 		holder.btnModify.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				
+				mMemberListListener.onUpdateClicked(position);
 			}
 		});
 		
@@ -91,13 +92,6 @@ public class MemberListAdapter extends BaseAdapter {
 		});
 		
 		return convertView;
-	}
-	
-	public Bitmap decodeEncodeString(String encodedImage){
-		byte[] decodedString = Base64.decode(encodedImage, Base64.DEFAULT);
-		Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-		
-		return decodedByte;
 	}
 
 	class ViewHolder {

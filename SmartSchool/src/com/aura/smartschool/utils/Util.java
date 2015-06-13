@@ -1,5 +1,7 @@
 package com.aura.smartschool.utils;
 
+import java.io.ByteArrayOutputStream;
+
 import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
@@ -34,7 +36,7 @@ public final class Util {
 		m_toast.show();
 	}
 	
-	public static Bitmap StringToBitMap(String encodedString) {
+	public static Bitmap StringToBitmap(String encodedString) {
 		try {
 			byte[] decodeByte = Base64.decode(encodedString, Base64.DEFAULT);
 			Bitmap bitmap = BitmapFactory.decodeByteArray(decodeByte, 0, decodeByte.length);
@@ -43,5 +45,15 @@ public final class Util {
 			e.getMessage();
 			return null;
 		}
+	}
+	
+    public static String BitmapToString(Bitmap bm){
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();  
+		
+		bm = Bitmap.createScaledBitmap(bm, 200, 200, true);
+		bm.compress(Bitmap.CompressFormat.JPEG, 80 , baos);    
+		byte[] b = baos.toByteArray(); 
+		
+		return Base64.encodeToString(b, Base64.DEFAULT);
 	}
 }

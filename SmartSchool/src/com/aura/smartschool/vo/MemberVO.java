@@ -1,6 +1,8 @@
 package com.aura.smartschool.vo;
 
-public class MemberVO {
+import java.io.Serializable;
+
+public class MemberVO implements Serializable {
 	public int member_id;
 	public String home_id;
 	public String mdn;
@@ -11,6 +13,8 @@ public class MemberVO {
 	public String school_name;
 	public String school_grade;
 	public String school_ban;
+	
+	private static final long serialVersionUID = 6631779405103025795L;
 	
 	public MemberVO () {
 		

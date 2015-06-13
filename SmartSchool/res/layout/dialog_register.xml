@@ -119,7 +119,7 @@
 	            android:id="@+id/btn_register"
 	            style="@style/Button_woodred"
 	            android:layout_width="match_parent"
-	            android:text="회원가입" />
+	            android:text="확  인" />
 	
 	    </LinearLayout>
     </LinearLayout>
